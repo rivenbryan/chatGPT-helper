@@ -1,36 +1,58 @@
 
-const axios = require('axios');
 
-const sendChatMessage = async (req ,res) => {
-    const messageDictionary = req.body
-    messageDictionary['role'] = 'user';
+const { Configuration, OpenAIApi } = require("openai");
+const dotenv = require('dotenv');
+dotenv.config();
 
-    const chatAPIcontent = { 
-        "model": "gpt-3.5-turbo", 
-        "messages": [ 
-            messageDictionary, 
-            
-            ] 
-    }
+const sendChatMessage = async (req, res) => {
+    const configuration = new Configuration({
+        apiKey: process.env.OPENAI_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+    const allUserMessage = req.body
+    const messageBodyToOpenAI = allUserMessage.map( (content) => ({
+        role: "user",
+        content,
+    }))
+
+    console.log(messageBodyToOpenAI)
     
     try {
-        const response = await axios.post('https://chatgpt-api.shn.hk/v1/', chatAPIcontent, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-        const message = response.data.choices[0].message.content
-        console.log(message)
-
-        res.send({text: "5", component: "comment"})
+        const completion = await openai.createChatCompletion({
+            model: "gpt-3.5-turbo",
+            messages: messageBodyToOpenAI,
+        });
+        console.log(completion.data.choices[0].message.content)
+        // Do checking and extract out the component
+        res.send(completion.data.choices[0].message.content)
     } catch (error) {
         console.log(error)
-        res.status(500).send('Something went wrong!');
+    }
+}
+
+const sendGenerateImage = async (req, res) => {
+    const configuration = new Configuration({
+        apiKey: process.env.OPENAI_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+
+    const messageDictionary = req.body
+    messageDictionary["n"] = 1
+    messageDictionary["size"] = "256x256"
+
+    try {
+        const response = await openai.createImage(messageDictionary);
+
+        const image_url = response.data.data[0].url;
+        res.send(image_url)
+    } catch (error) {
+        console.log(error.response.data)
     }
 }
 
 const chatGPTController = {
-    sendChatMessage
+    sendChatMessage,
+    sendGenerateImage,
 }
 
 module.exports = chatGPTController
