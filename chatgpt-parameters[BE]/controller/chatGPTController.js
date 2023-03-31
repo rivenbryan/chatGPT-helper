@@ -1,8 +1,10 @@
 
 
 const { Configuration, OpenAIApi } = require("openai");
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config({ path: '../.env' });
+
+
+
 
 const sendChatMessage = async (req, res) => {
     const configuration = new Configuration({

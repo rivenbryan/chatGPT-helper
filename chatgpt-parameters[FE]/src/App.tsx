@@ -1,32 +1,34 @@
-import { TextInput, Checkbox, Button, Group, Box, MantineProvider, Text } from '@mantine/core';
+import { Text, TextInput, Checkbox, Button, Group, Box, MantineProvider, Grid, Drawer } from '@mantine/core';
+
 import { useForm } from '@mantine/form';
 import axios from 'axios';
-import { resolve } from 'path';
 import { useState, useEffect, useRef } from 'react';
-
-interface ChatMessage {
-  data: string,
-}
+import {ChatMessageType} from '../types/types'
+import SideBar from "./components/SideBar/SideBar"
 
 export default function App() {
   const [allChatMessage, setAllChatMessage] = useState<string[]>([]);
   const [allUserMessage, setAllUserMessage] = useState<string[]>([]);
   const isMountedRef = useRef(false);
+  const [open, setOpen] = useState(true);
 
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
   /*
   * useEffect is called everytime we have a new Message
   * Make a request to the server
   */
 
   useEffect(() => {
-
+      
     // This code will run only after the component has mounted
     if (isMountedRef.current) {
       console.log("UseEffect called! ")
       axios.post('http://localhost:5000/api/request', allUserMessage)
         .then(response => {
           console.log(allUserMessage)
-          const newMessage = response as ChatMessage
+          const newMessage = response as ChatMessageType
           setAllChatMessage((previousArrayChatMessages) => {
             
             const newArrayOfChatMessages: string[] = [...previousArrayChatMessages]
@@ -78,8 +80,8 @@ export default function App() {
 
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Text>Welcome to ChatGPT</Text>
-      <Box maw={300} mx="auto">
+        <SideBar/>
+      {/* <Box maw={300} mx="auto">
         <form onSubmit={handleSubmit}>
           <TextInput
             {...form.getInputProps('value')}
@@ -94,7 +96,7 @@ export default function App() {
             <br />
           </>
         ))}
-      </Box>
+      </Box> */}
     </MantineProvider>
   )
 }
