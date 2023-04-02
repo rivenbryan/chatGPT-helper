@@ -7,7 +7,7 @@ type Props = {}
 
 export default function SideBar({ }: Props) {
   return (
-    <Navbar height={800} p="xs" width={{ base: 300 }}>
+    <Navbar style={{border: "1px solid black"}} p="xs" >
       <Navbar.Section>
         <SideBarHeader />
       </Navbar.Section>

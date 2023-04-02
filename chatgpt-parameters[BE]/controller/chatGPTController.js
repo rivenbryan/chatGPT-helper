@@ -7,6 +7,7 @@ require('dotenv').config({ path: '../.env' });
 
 
 const sendChatMessage = async (req, res) => {
+    console.log(process.env.OPENAI_API_KEY)
     const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
     });
