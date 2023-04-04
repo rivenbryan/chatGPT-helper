@@ -3,12 +3,15 @@ import { useForm } from '@mantine/form';
 import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
 import { ChatMessageType } from "../../types/types"
-import { Text, TextInput, Checkbox, Button, Group, Box, MantineProvider, Grid, Drawer } from '@mantine/core';
 import ChatMessage from './ChatMessage';
-
+import Input from './Input';
+import './ChatUI.css';
 
 export default function ChatContent() {
+    /* allChatMessage contains ALL chat message between User and ChatGPT */
     const [allChatMessage, setAllChatMessage] = useState<string[]>([]);
+
+    /* allUserMessage contains ALL chat message from User  */
     const [allUserMessage, setAllUserMessage] = useState<string[]>([]);
     const isMountedRef = useRef(false);
 
@@ -67,18 +70,15 @@ export default function ChatContent() {
 
 
     }
-    return (
-        <>
-            <ChatMessage allChatMessage={allChatMessage} />
-            <form onSubmit={handleSubmit}>
-                <TextInput
-                    {...form.getInputProps('value')}
-                />
-                <Group position="right" mt="md">
-                    <Button type="submit">Send</Button>
-                </Group>
-            </form>
 
-        </>
+    return (
+            <div className="chat-container">
+                <div className="messages-container">
+                    <ChatMessage allChatMessage={allChatMessage} />
+                </div>
+                <div className="input-container">
+                    <Input handleSubmit={handleSubmit} form={form} />
+                </div>
+            </div>
     )
 }
