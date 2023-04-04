@@ -1,6 +1,6 @@
 import React from 'react'
 import { TextInput, Group, Button } from '@mantine/core';
-import { useForm, UseFormReturnType } from '@mantine/form';
+import { UseFormReturnType } from '@mantine/form';
 type InputProps = {
     handleSubmit: React.FormEventHandler<HTMLFormElement>,
     form: UseFormReturnType<{

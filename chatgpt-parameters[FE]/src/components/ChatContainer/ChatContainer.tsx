@@ -3,11 +3,11 @@ import { useForm } from '@mantine/form';
 import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
 import { ChatMessageType } from "../../types/types"
-import ChatMessage from './ChatMessage';
+import ChatContent from './ChatContent';
 import Input from './Input';
 import './ChatUI.css';
 
-export default function ChatContent() {
+export default function ChatContainer() {
     /* allChatMessage contains ALL chat message between User and ChatGPT */
     const [allChatMessage, setAllChatMessage] = useState<string[]>([]);
 
@@ -49,6 +49,7 @@ export default function ChatContent() {
                         console.log(newArrayOfChatMessages)
                         return newArrayOfChatMessages;
                     })
+
                      /* 
                      *  Reset Loader to false
                      */
@@ -95,7 +96,7 @@ export default function ChatContent() {
     return (
             <div className="chat-container">
                 <div className="messages-container">
-                    <ChatMessage allChatMessage={allChatMessage} />
+                    <ChatContent allChatMessage={allChatMessage} />
                 </div>
                 <div className="input-container">
                     <Input handleSubmit={handleSubmit} form={form} isLoading={isLoading} />
