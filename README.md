@@ -5,6 +5,8 @@ Welcome to ChatGPT Clone, a project inspired by the OpenAI language model GPT-3.
 ## NOT COMPLETED
 This project is still on-going.
 
+## Tech Stack
+MERN
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
