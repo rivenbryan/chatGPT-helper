@@ -9,19 +9,17 @@ type InputProps = {
         value: string;
     }) => {
         value: string;
-    }>
+    }>,
+    isLoading: boolean
 }
 
-export default function Input({ handleSubmit, form }: InputProps) {
+export default function Input({ handleSubmit, form, isLoading }: InputProps) {
     return (
         <>
-
-
             <form onSubmit={handleSubmit}>
-
                 <Group position="center" mt="xs">
                     <TextInput style={{width: "80%"}}{...form.getInputProps('value')}  />
-                    <Button type="submit">Send</Button>
+                    <Button loading={isLoading} type="submit">Send</Button>
                 </Group>
             </form>
 

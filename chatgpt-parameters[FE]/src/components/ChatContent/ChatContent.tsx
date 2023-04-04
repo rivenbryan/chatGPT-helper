@@ -11,9 +11,20 @@ export default function ChatContent() {
     /* allChatMessage contains ALL chat message between User and ChatGPT */
     const [allChatMessage, setAllChatMessage] = useState<string[]>([]);
 
-    /* allUserMessage contains ALL chat message from User  */
+    /* allUserMessage contains ALL chat message from User */
     const [allUserMessage, setAllUserMessage] = useState<string[]>([]);
+
+    /* isMountedRef variable is to make sure useEffect does not do an initial run */
     const isMountedRef = useRef(false);
+
+    /* isLoading is to check if message is sent/received from backend */
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    const form = useForm({
+        initialValues: {
+            value: '',
+        }
+    });
 
     useEffect(() => {
 
@@ -28,7 +39,8 @@ export default function ChatContent() {
 
                         const newArrayOfChatMessages: string[] = [...previousArrayChatMessages]
                         console.log(newArrayOfChatMessages)
-                        /* We want to add in two content to our chatMessage
+                        /* 
+                        *  We want to add in two content to our chatMessage
                         *  1. The chat message that user type
                         *  2. The chat message that Chat GPT response
                         */
@@ -37,6 +49,10 @@ export default function ChatContent() {
                         console.log(newArrayOfChatMessages)
                         return newArrayOfChatMessages;
                     })
+                     /* 
+                     *  Reset Loader to false
+                     */
+                    setIsLoading(false)
                 })
                 .catch(error => console.error(error));
         } else {
@@ -46,18 +62,19 @@ export default function ChatContent() {
             isMountedRef.current = true;
         }
 
+        /*
+        * Empty the form
+        */
+
+        form.setFieldValue('value', "")
+
     }, [allUserMessage]);
 
-    const form = useForm({
-        initialValues: {
-            value: '',
-        }
-    });
+    
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
         console.log("Clicked!")
-
         const requestParameter = form.values;
         console.log(requestParameter)
 
@@ -67,8 +84,12 @@ export default function ChatContent() {
             console.log(newArrayOfUserMessages);
             return newArrayOfUserMessages;
         });
-
-
+        /* 
+        * Set Loading Spinner to True
+        */
+        setIsLoading(true)
+        
+    
     }
 
     return (
@@ -77,7 +98,7 @@ export default function ChatContent() {
                     <ChatMessage allChatMessage={allChatMessage} />
                 </div>
                 <div className="input-container">
-                    <Input handleSubmit={handleSubmit} form={form} />
+                    <Input handleSubmit={handleSubmit} form={form} isLoading={isLoading} />
                 </div>
             </div>
     )
