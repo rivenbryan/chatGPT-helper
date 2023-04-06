@@ -7,7 +7,7 @@ type Props = {}
 
 export default function SideBar({ }: Props) {
   return (
-    <Navbar style={{border: "1px solid black"}} p="xs" >
+    <Navbar style={{  backgroundColor: '#F6F8FB'}} p="xs" >
       <Navbar.Section>
         <SideBarHeader />
       </Navbar.Section>
@@ -17,8 +17,6 @@ export default function SideBar({ }: Props) {
       <Navbar.Section>
         <SideBarFooter />
       </Navbar.Section>
-
-
     </Navbar>
   )
 }

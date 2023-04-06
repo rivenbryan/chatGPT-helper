@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { ChatMessageType } from "../../types/types"
 import ChatContent from './ChatContent';
 import Input from './Input';
+import ChatGptLogo from './ChatGptLogo';
 import './ChatUI.css';
 
 export default function ChatContainer() {
@@ -25,7 +26,7 @@ export default function ChatContainer() {
             value: '',
         }
     });
-
+    
     useEffect(() => {
 
         // This code will run only after the component has mounted
@@ -96,6 +97,7 @@ export default function ChatContainer() {
     return (
             <div className="chat-container">
                 <div className="messages-container">
+                    {allChatMessage.length == 0 && <ChatGptLogo/>}
                     <ChatContent allChatMessage={allChatMessage} />
                 </div>
                 <div className="input-container">

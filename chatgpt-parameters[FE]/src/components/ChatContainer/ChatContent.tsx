@@ -29,21 +29,3 @@ export default function ChatContent({ allChatMessage }: ChatMessageProps) {
         </>
     )
 }
-
-// {allChatMessage.map((chatMessage, index) => {
-//     let style: React.CSSProperties = {
-//         minHeight: "100px", padding: "20px"
-//     }
-//     if (index % 2 == 0) {
-//         style = { background: "#FFFFFF", minHeight: "100px", padding: "20px" }
-//     }
-//     return (
-//         <Box key={index} style={style}>
-//             <Group>
-//                 <BsRobot/>
-//                 <Text >{chatMessage}</Text>
-//             </Group>
-//         </Box>
-//     )
-
-// })}

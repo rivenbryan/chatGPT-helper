@@ -8,8 +8,7 @@ export default function SideBarHeader({ }: Props) {
         <Box
             sx={(theme) => ({
                 paddingBottom: theme.spacing.lg,
-                borderBottom: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
-                    }`,
+                borderBottom: `1px solid ${theme.colors.gray[2]}`,
             })}
         >
 
@@ -17,6 +16,7 @@ export default function SideBarHeader({ }: Props) {
                 textAlign: 'left',
                 display: 'flex',
                 placeItems: 'center flex-start',
+                
             }}>
 
                 <FaPlus style={{ marginRight: '0.5rem' }} /> New chat
