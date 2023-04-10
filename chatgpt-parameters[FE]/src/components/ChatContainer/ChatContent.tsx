@@ -1,8 +1,8 @@
 import React from 'react'
-
 import { BsRobot } from "react-icons/bs";
 import { BiUserCircle } from "react-icons/bi";
 import ChatMessage from './ChatMessage';
+
 type ChatMessageProps = {
     allChatMessage: string[]
 }
