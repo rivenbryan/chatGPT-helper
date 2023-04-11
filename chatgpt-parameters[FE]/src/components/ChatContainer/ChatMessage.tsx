@@ -1,19 +1,23 @@
-import React from 'react'
-import { Text, Box, Group } from '@mantine/core';
+import React from 'react';
+import { Text, Box, Group, Stack, Code } from '@mantine/core';
+import ReactMarkdown from 'react-markdown';
 type ChatMessageProps = {
     chatMessage: string,
     index: number,
-    style: React.CSSProperties
-    logo:  JSX.Element,
-}
+    style: React.CSSProperties,
+    logo: JSX.Element,
+};
 
-export default function ChatMessage({chatMessage,style,index, logo}: ChatMessageProps) {
+export default function ChatMessage({ chatMessage, style, index, logo }: ChatMessageProps) {
+
     return (
         <Box key={index} style={style}>
             <Group>
                 {logo}
-                <Text >{chatMessage}</Text>
+                <Stack >
+                    <ReactMarkdown>{chatMessage}</ReactMarkdown>
+                </Stack>
             </Group>
         </Box>
-    )
+    );
 }
