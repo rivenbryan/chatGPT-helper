@@ -11,12 +11,14 @@ var cors = require('cors')
 * Middleware called CORs-> responsible for parsing the request FE to BE
 */
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 app.use(cors({
   origin : "http://localhost:3000",
   credentials: true
 }))
+
 app.use((req, res, next)=> {
   console.log(req.path, req.method)
   next()
@@ -26,7 +28,6 @@ app.use((req, res, next)=> {
 * Routes for API
 */
 app.use('/api', chatGPT_router)
-
 
 /*
 * Listening to port

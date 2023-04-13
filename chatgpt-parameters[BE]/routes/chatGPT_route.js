@@ -12,5 +12,5 @@ const chatGPTController = require("../controller/chatGPTController")
 
 chatGPT_router.post("/request", chatGPTController.sendChatMessage)
 chatGPT_router.post("/generateImage", chatGPTController.sendGenerateImage)
-
+chatGPT_router.post("/upload", chatGPTController.sendImageToChatGPT)
 module.exports = chatGPT_router
