@@ -1,7 +1,6 @@
 import React from 'react';
 import {UnstyledButton, Group, Text } from '@mantine/core';
 import {AiFillDelete,AiFillInfoCircle } from "react-icons/ai";
-import {FaRegMoon} from "react-icons/fa";
 
 interface MainLinkProps {
   icon: React.ReactNode;
@@ -32,10 +31,7 @@ function SideFooterContent({ icon, label }: MainLinkProps) {
 }
 
 const data = [
-  { icon: <FaRegMoon/>, color: 'teal', label: 'ChatGPT - Text' },
-  { icon: <FaRegMoon/>, color: 'teal', label: 'ChatGpt - Image' },
   { icon: <AiFillDelete />, color: 'blue', label: 'Clear Conversations' },
-  { icon: <FaRegMoon/>, color: 'teal', label: 'Light mode' },
   { icon: <AiFillInfoCircle />, color: 'violet', label: 'About' },
 ];
 

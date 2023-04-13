@@ -3,13 +3,13 @@ import { FileButton, Button, Group, Text } from '@mantine/core';
 import axios from 'axios';
 import { ChatMessageContext } from '../../contexts/ChatMessageContext';
 export default function ChatImageUpload() {
-  const {setAllUserMessage, setIsLoading } = useContext(ChatMessageContext);
+  const {setAllUserMessage, setIsLoading, isLoading } = useContext(ChatMessageContext);
   const [file, setFile] = useState<File | null>(null);
 
   const handleUpload = async (file: File) => {
     console.log("handleUpload button clicked!")
     if (!file) return;
-
+    setIsLoading(true)
     const formData = new FormData();
     formData.append('image', file);
 
@@ -22,7 +22,7 @@ export default function ChatImageUpload() {
         console.log(newArrayOfUserMessages);
         return newArrayOfUserMessages;
       });
-      setIsLoading(true)
+      
     } catch (error) {
       console.error('Error:', error);
     }
@@ -39,7 +39,7 @@ export default function ChatImageUpload() {
           onChange={handleSelectAndUpload}
           accept="image/png,image/jpeg"
         >
-          {(props) => <Button {...props}>Select image</Button>}
+          {(props) => <Button {...props} loading={isLoading}>Select image</Button>}
         </FileButton>
       </Group>
 
