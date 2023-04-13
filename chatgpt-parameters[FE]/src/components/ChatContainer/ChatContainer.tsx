@@ -14,8 +14,6 @@ export default function ChatContainer() {
     /* isMountedRef variable is to make sure useEffect does not do an initial run */
     const isMountedRef = useRef(false);
 
-
-
     const form = useForm({
         initialValues: {
             value: '',

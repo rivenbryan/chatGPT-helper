@@ -42,7 +42,6 @@ export default function ChatImageUpload() {
           {(props) => <Button {...props} loading={isLoading}>Select image</Button>}
         </FileButton>
       </Group>
-
     </>
   );
 }

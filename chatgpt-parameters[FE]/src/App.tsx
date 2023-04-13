@@ -13,7 +13,12 @@ export default function App() {
   /* isLoading is to check if message is sent/received from backend */
   const [isLoading, setIsLoading] = useState<boolean>(false)
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{
+        colorScheme: 'dark'
+      }}>
       <ChatMessageContext.Provider
         value={{ allChatMessage, setAllChatMessage, allUserMessage, setAllUserMessage, isLoading, setIsLoading }}
       >

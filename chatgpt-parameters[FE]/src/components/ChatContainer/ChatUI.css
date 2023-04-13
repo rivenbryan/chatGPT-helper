@@ -2,7 +2,7 @@
 .chat-container {
     position: relative;
     height: 100vh;
-    background-color: #f6f8fb;
+    background-color: #25262B
   }
   
   .messages-container {
@@ -16,6 +16,5 @@
     left: 0;
     right: 0;
     padding: 10px;
-    background-color:  #f6f8fb;
   }
   

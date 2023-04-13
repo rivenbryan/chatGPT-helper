@@ -12,7 +12,7 @@ export default function SideBarHeader({ }: Props) {
             })}
         >
 
-            <Button variant="default" radius="md" size="md" fullWidth style={{
+            <Button disabled variant="default" radius="md" size="md" fullWidth style={{
                 textAlign: 'left',
                 display: 'flex',
                 placeItems: 'center flex-start',
