@@ -32,6 +32,8 @@ function SideFooterContent({ icon, label }: MainLinkProps) {
 }
 
 const data = [
+  { icon: <FaRegMoon/>, color: 'teal', label: 'ChatGPT - Text' },
+  { icon: <FaRegMoon/>, color: 'teal', label: 'ChatGpt - Image' },
   { icon: <AiFillDelete />, color: 'blue', label: 'Clear Conversations' },
   { icon: <FaRegMoon/>, color: 'teal', label: 'Light mode' },
   { icon: <AiFillInfoCircle />, color: 'violet', label: 'About' },

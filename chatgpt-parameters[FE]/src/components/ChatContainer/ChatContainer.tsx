@@ -1,25 +1,20 @@
 import React from 'react'
 import { useForm } from '@mantine/form';
 import axios from 'axios';
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext} from 'react';
 import { ChatMessageType } from "../../types/types"
 import ChatContent from './ChatContent';
 import Input from './Input';
 import ChatGptLogo from './ChatGptLogo';
 import './ChatUI.css';
-
+import { ChatMessageContext } from '../../contexts/ChatMessageContext';
 export default function ChatContainer() {
-    /* allChatMessage contains ALL chat message between User and ChatGPT */
-    const [allChatMessage, setAllChatMessage] = useState<string[]>([]);
-
-    /* allUserMessage contains ALL chat message from User */
-    const [allUserMessage, setAllUserMessage] = useState<string[]>([]);
+    const {allChatMessage, setAllChatMessage, allUserMessage, setAllUserMessage, isLoading, setIsLoading } = useContext(ChatMessageContext);
 
     /* isMountedRef variable is to make sure useEffect does not do an initial run */
     const isMountedRef = useRef(false);
 
-    /* isLoading is to check if message is sent/received from backend */
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+
 
     const form = useForm({
         initialValues: {
@@ -36,7 +31,7 @@ export default function ChatContainer() {
                 .then(response => {
                     console.log(allUserMessage)
                     const newMessage = response as ChatMessageType
-                    setAllChatMessage((previousArrayChatMessages) => {
+                    setAllChatMessage((previousArrayChatMessages: any) => {
 
                         const newArrayOfChatMessages: string[] = [...previousArrayChatMessages]
                         console.log(newArrayOfChatMessages)
@@ -80,7 +75,7 @@ export default function ChatContainer() {
         const requestParameter = form.values;
         console.log(requestParameter)
 
-        setAllUserMessage((prevArrayUserMessages) => {
+        setAllUserMessage((prevArrayUserMessages: any) => {
             const newArrayOfUserMessages: string[] = [...prevArrayUserMessages];
             newArrayOfUserMessages.push(requestParameter.value);
             console.log(newArrayOfUserMessages);

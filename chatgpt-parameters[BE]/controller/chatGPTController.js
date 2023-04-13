@@ -12,12 +12,13 @@ const sendChatMessage = async (req, res) => {
         apiKey: process.env.OPENAI_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
+    console.log(req.body)
     const allUserMessage = req.body
     const messageBodyToOpenAI = allUserMessage.map((content) => ({
         role: "user",
         content,
     }))
-
+    console.log(messageBodyToOpenAI)
     try {
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
@@ -105,7 +106,6 @@ const getOcrText = async (imageUrl, fileType) => {
     }
   };
 
-
   
 const sendImageToChatGPT = async (req, res) => {
     console.log(req.file)
@@ -113,25 +113,21 @@ const sendImageToChatGPT = async (req, res) => {
     try {
         /* Function to send image to cloudinary*/
         const urlFromCloudinary = await uploadImageToCloudinary(req.file.buffer);
-        console.log(urlFromCloudinary);
+        console.log("Finished first function\n" + urlFromCloudinary);
 
          /* Function to send the URL to OCR */
         const message = await getOcrText(urlFromCloudinary);
-        console.log(message)
+        console.log("Finished second function\n" + message.ParsedResults[0].ParsedText);
 
-        /* Function to send the text to ChatGPT */
-        
+        /* If everything is successfully send this back to main function */
+        res.send(message.ParsedResults[0].ParsedText)
     } catch (error) {
         console.error('Error uploading image:', error);
         res.status(500).json({ error: 'Error uploading image' });
     }
 
-
-
-
-
-
 };
+
 
 const chatGPTController = {
     sendChatMessage,
