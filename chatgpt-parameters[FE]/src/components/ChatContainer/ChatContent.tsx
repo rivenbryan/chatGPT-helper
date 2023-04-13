@@ -17,7 +17,7 @@ export default function ChatContent({ allChatMessage }: ChatMessageProps) {
                 }
                 /* Render User Messages */
                 if (index % 2 == 0) {
-                    style = {...style, background: "#373A40"}
+                    style = {...style, background: "#444654"}
                     return <ChatMessage style={style} index={index} chatMessage={chatMessage} logo={<BiUserCircle />}/>
                 } else {
                 /* Render Bot Messages */

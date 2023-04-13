@@ -72,6 +72,11 @@ export default function ChatContainer() {
         console.log("Clicked!")
         const requestParameter = form.values;
         console.log(requestParameter)
+        if (requestParameter.value == ""){
+            // Set Error Message // 
+            return
+        }
+        console.log(requestParameter)
 
         setAllUserMessage((prevArrayUserMessages: any) => {
             const newArrayOfUserMessages: string[] = [...prevArrayUserMessages];

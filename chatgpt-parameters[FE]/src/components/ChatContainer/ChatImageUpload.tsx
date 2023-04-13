@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { FileButton, Button, Group, Text } from '@mantine/core';
 import axios from 'axios';
 import { ChatMessageContext } from '../../contexts/ChatMessageContext';
-export default function ChatImageUpload() {
+export default function ChatImageUploadButton() {
   const {setAllUserMessage, setIsLoading, isLoading } = useContext(ChatMessageContext);
   const [file, setFile] = useState<File | null>(null);
 
@@ -39,7 +39,7 @@ export default function ChatImageUpload() {
           onChange={handleSelectAndUpload}
           accept="image/png,image/jpeg"
         >
-          {(props) => <Button {...props} loading={isLoading}>Select image</Button>}
+          {(props) => <Button color="gray" {...props} loading={isLoading}>Select image</Button>}
         </FileButton>
       </Group>
     </>
