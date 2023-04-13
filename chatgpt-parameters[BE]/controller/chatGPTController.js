@@ -24,6 +24,7 @@ const sendChatMessage = async (req, res) => {
             model: "gpt-3.5-turbo",
             messages: messageBodyToOpenAI,
         });
+        console.log("test")
         console.log(completion.data.choices[0].message.content)
         // Do checking and extract out the component
         res.send(completion.data.choices[0].message.content)
