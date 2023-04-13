@@ -2,11 +2,12 @@
 
 const { Configuration, OpenAIApi } = require("openai");
 const cloudinary = require('../utils/cloudinary')
+const axios = require('axios');
+const FormData = require('form-data');
 
 require('dotenv').config({ path: '../.env' });
 
 const sendChatMessage = async (req, res) => {
-    console.log(process.env.OPENAI_API_KEY)
     const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
     });
@@ -16,8 +17,6 @@ const sendChatMessage = async (req, res) => {
         role: "user",
         content,
     }))
-
-    console.log(messageBodyToOpenAI)
 
     try {
         const completion = await openai.createChatCompletion({
@@ -55,46 +54,81 @@ const sendGenerateImage = async (req, res) => {
 
 const uploadImageToCloudinary = async (buffer) => {
     try {
-      const result = await new Promise((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
-          {
-            resource_type: 'image',
-          },
-          (error, result) => {
-            if (error) {
-              console.error('Error uploading image:', error);
-              reject(error);
-            } else {
-              resolve(result);
-            }
-          }
-        ).end(buffer);
-      });
-      return result.secure_url;
+        const result = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+                {
+                    resource_type: 'image',
+                },
+                (error, result) => {
+                    if (error) {
+                        console.error('Error uploading image:', error);
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            ).end(buffer);
+        });
+        return result.secure_url;
     } catch (error) {
+        throw error;
+    }
+};
+
+const getOcrText = async (imageUrl, fileType) => {
+    const ocrApiUrl = 'https://api.ocr.space/parse/image';
+  
+    // Create a FormData object and append the necessary fields
+    const formData = new FormData();
+    formData.append('language', 'eng');
+    formData.append('isOverlayRequired', 'false');
+    formData.append('url', imageUrl);
+    formData.append('iscreatesearchablepdf', 'false');
+    formData.append('issearchablepdfhidetextlayer', 'false');
+  
+    if (fileType) {
+      formData.append('filetype', fileType);
+    }
+  
+    try {
+      const response = await axios.post(ocrApiUrl, formData, {
+        headers: {
+          apikey: process.env.OCR_API_KEY,
+          ...formData.getHeaders(),
+        },
+      });
+  
+      return response.data;
+    } catch (error) {
+      console.error('Error getting OCR text:', error);
       throw error;
     }
   };
+
+
   
 const sendImageToChatGPT = async (req, res) => {
     console.log(req.file)
 
-    
     try {
         /* Function to send image to cloudinary*/
         const urlFromCloudinary = await uploadImageToCloudinary(req.file.buffer);
         console.log(urlFromCloudinary);
 
-      } catch (error) {
+         /* Function to send the URL to OCR */
+        const message = await getOcrText(urlFromCloudinary);
+        console.log(message)
+
+        /* Function to send the text to ChatGPT */
+        
+    } catch (error) {
         console.error('Error uploading image:', error);
         res.status(500).json({ error: 'Error uploading image' });
-      }
+    }
 
 
 
-    /* Function to send the URL to OCR */
 
-    /* Function to send the text to ChatGPT */
 
 
 };
