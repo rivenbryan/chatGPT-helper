@@ -1,5 +1,8 @@
 const express = require("express")
 const chatGPT_router = express.Router()
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 /*
 * Initialise the controller files
@@ -7,10 +10,11 @@ const chatGPT_router = express.Router()
 const chatGPTController = require("../controller/chatGPTController")
 
 /*
-* Set the different routes for backend API
+ Second parameter is used as a callback function for multer 
+ To processes the incoming request before the main route handler function is execute
 */
-
+chatGPT_router.post("/upload", upload.single('image'), chatGPTController.sendImageToChatGPT)
 chatGPT_router.post("/request", chatGPTController.sendChatMessage)
 chatGPT_router.post("/generateImage", chatGPTController.sendGenerateImage)
-chatGPT_router.post("/upload", chatGPTController.sendImageToChatGPT)
+
 module.exports = chatGPT_router

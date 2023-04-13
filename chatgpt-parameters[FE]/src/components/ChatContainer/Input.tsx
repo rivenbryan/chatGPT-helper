@@ -1,6 +1,7 @@
 import React from 'react'
 import { TextInput, Group, Button } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
+import ChatImageUpload from './ChatImageUpload';
 type InputProps = {
     handleSubmit: React.FormEventHandler<HTMLFormElement>,
     form: UseFormReturnType<{
@@ -18,6 +19,7 @@ export default function Input({ handleSubmit, form, isLoading }: InputProps) {
         <>
             <form onSubmit={handleSubmit}>
                 <Group position="center" mt="xs">
+                    <ChatImageUpload/>
                     <TextInput style={{width: "80%"}}{...form.getInputProps('value')}  />
                     <Button loading={isLoading} type="submit">Send</Button>
                 </Group>

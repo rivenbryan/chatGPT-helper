@@ -1,7 +1,7 @@
 
 
 const { Configuration, OpenAIApi } = require("openai");
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('../utils/cloudinary')
 
 require('dotenv').config({ path: '../.env' });
 
@@ -53,48 +53,50 @@ const sendGenerateImage = async (req, res) => {
     }
 }
 
+const uploadImageToCloudinary = async (buffer) => {
+    try {
+      const result = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream(
+          {
+            resource_type: 'image',
+          },
+          (error, result) => {
+            if (error) {
+              console.error('Error uploading image:', error);
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          }
+        ).end(buffer);
+      });
+      return result.secure_url;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
 const sendImageToChatGPT = async (req, res) => {
-    console.log(req)
-    /* Function to send image to cloudinary*/
+    console.log(req.file)
 
-    // Configuration 
-    cloudinary.config({
-        cloud_name: "dtoe0tsbf",
-        api_key: "646339638971794",
-        api_secret: "CgOX6hKAXMA9T-J2-Q5A2J6SlUI"
-    });
+    
+    try {
+        /* Function to send image to cloudinary*/
+        const urlFromCloudinary = await uploadImageToCloudinary(req.file.buffer);
+        console.log(urlFromCloudinary);
 
-    const resp = cloudinary.uploader.upload(req, { public_id: "olympic_flag" })
-
-    resp.then((data) => {
-        console.log(data);
-        console.log(data.secure_url);
-    }).catch((err) => {
-        console.log(err);
-    });
-
-
-    // Generate 
-    const url = cloudinary.url("olympic_flag", {
-        width: 100,
-        height: 150,
-        Crop: 'fill'
-    });
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        res.status(500).json({ error: 'Error uploading image' });
+      }
 
 
 
-
-
-
-    // The output url
-    console.log(url);
     /* Function to send the URL to OCR */
 
     /* Function to send the text to ChatGPT */
 
 
-    console.log("hello")
-    res.send('Hello World!')
 };
 
 const chatGPTController = {
