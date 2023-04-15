@@ -1,7 +1,7 @@
 import { MantineProvider, Grid } from '@mantine/core';
 import SideBar from "./components/SideBar/SideBar"
 import ChatContainer from './components/ChatContainer/ChatContainer';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { ChatMessageContext } from './contexts/ChatMessageContext';
 export default function App() {
   /* allChatMessage contains ALL chat message between User and ChatGPT */
@@ -12,6 +12,9 @@ export default function App() {
 
   /* isLoading is to check if message is sent/received from backend */
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  /* apiTriggerFlag is used as a flag to set API to be used or not to be used */
+  const apiTriggerFlag = useRef(false);
   return (
     <MantineProvider
       withGlobalStyles
@@ -20,7 +23,7 @@ export default function App() {
         colorScheme: 'dark'
       }}>
       <ChatMessageContext.Provider
-        value={{ allChatMessage, setAllChatMessage, allUserMessage, setAllUserMessage, isLoading, setIsLoading }}
+        value={{ apiTriggerFlag, allChatMessage, setAllChatMessage, allUserMessage, setAllUserMessage, isLoading, setIsLoading }}
       >
         <Grid gutter={0} grow>
           <Grid.Col span={1}><SideBar /></Grid.Col>

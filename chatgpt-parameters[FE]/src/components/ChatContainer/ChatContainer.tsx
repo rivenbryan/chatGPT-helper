@@ -9,10 +9,10 @@ import ChatGptLogo from './ChatGptLogo';
 import './ChatUI.css';
 import { ChatMessageContext } from '../../contexts/ChatMessageContext';
 export default function ChatContainer() {
-    const {allChatMessage, setAllChatMessage, allUserMessage, setAllUserMessage, isLoading, setIsLoading } = useContext(ChatMessageContext);
+    const {apiTriggerFlag, allChatMessage, setAllChatMessage, allUserMessage, setAllUserMessage, isLoading, setIsLoading } = useContext(ChatMessageContext);
 
     /* isMountedRef variable is to make sure useEffect does not do an initial run */
-    const isMountedRef = useRef(false);
+
 
     const form = useForm({
         initialValues: {
@@ -23,7 +23,7 @@ export default function ChatContainer() {
     useEffect(() => {
 
         // This code will run only after the component has mounted
-        if (isMountedRef.current) {
+        if (apiTriggerFlag.current) {
             console.log("UseEffect called! ")
             axios.post('http://localhost:5000/api/request', allUserMessage)
                 .then(response => {
@@ -54,7 +54,7 @@ export default function ChatContainer() {
             /*
             * When useEffect is run for the first time, it sets isMountedRef to True
             */
-            isMountedRef.current = true;
+            apiTriggerFlag.current = true;
         }
 
         /*
@@ -84,7 +84,6 @@ export default function ChatContainer() {
             console.log(newArrayOfUserMessages);
             return newArrayOfUserMessages;
         });
-        
         /* 
         * Set Loading Spinner to True
         */
