@@ -1,5 +1,7 @@
 import { useState, useContext } from 'react';
 import { FileButton, Button, Group, Text } from '@mantine/core';
+import { AiOutlineFileImage } from "react-icons/ai";
+
 import axios from 'axios';
 import { ChatMessageContext } from '../../contexts/ChatMessageContext';
 export default function ChatImageUploadButton() {
@@ -34,14 +36,13 @@ export default function ChatImageUploadButton() {
   };
   return (
     <>
-      <Group position="center">
-        <FileButton
+        <FileButton 
           onChange={handleSelectAndUpload}
           accept="image/png,image/jpeg"
         >
-          {(props) => <Button color="gray" {...props} loading={isLoading}>Select image</Button>}
+         
+          {(props) =>  <AiOutlineFileImage size="1.5rem" {...props} />}
         </FileButton>
-      </Group>
     </>
   );
 }

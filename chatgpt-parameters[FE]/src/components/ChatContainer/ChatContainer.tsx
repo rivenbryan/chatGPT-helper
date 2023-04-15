@@ -84,6 +84,7 @@ export default function ChatContainer() {
             console.log(newArrayOfUserMessages);
             return newArrayOfUserMessages;
         });
+        
         /* 
         * Set Loading Spinner to True
         */
